@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "sizeentityattributes",
+  "version": "${version}",
+  "name": "Size Entity Attributes",
+  "description": "A library to change the size of entities",
+  "authors": [
+	"MoriyaShiine"
+  ],
+  "contact": {
+	"homepage": "https://www.curseforge.com/minecraft/mc-mods/size-entity-attributes",
+	"sources": "https://github.com/MoriyaShiine/size-entity-attributes"
+  },
+  "license": "GPL-3.0",
+  "environment": "*",
+  "mixins": [
+	"sizeentityattributes.mixins.json"
+  ],
+  "depends": {
+	"fabricloader": ">=0.7.4",
+	"fabric": "*",
+	"minecraft": "1.16.x"
+  },
+  "suggests": {
+	"flamingo": "*"
+  }
+}
