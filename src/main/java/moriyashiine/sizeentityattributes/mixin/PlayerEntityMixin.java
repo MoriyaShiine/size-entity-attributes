@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,12 +21,20 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	
 	@Inject(method = "getDimensions", at = @At("RETURN"), cancellable = true)
 	private void getDimensions(EntityPose pose, CallbackInfoReturnable<EntityDimensions> callbackInfo) {
-		callbackInfo.setReturnValue(callbackInfo.getReturnValue().scaled((float) getAttributeValue(SizeEntityAttributes.WIDTH_MULTIPLIER), (float) getAttributeValue(SizeEntityAttributes.HEIGHT_MULTIPLIER)));
+		EntityAttributeInstance widthMultiplier = getAttributeInstance(SizeEntityAttributes.WIDTH_MULTIPLIER);
+		EntityAttributeInstance heightMultiplier = getAttributeInstance(SizeEntityAttributes.HEIGHT_MULTIPLIER);
+		if (widthMultiplier != null && heightMultiplier != null) {
+			callbackInfo.setReturnValue(callbackInfo.getReturnValue().scaled((float) widthMultiplier.getValue(), (float) heightMultiplier.getValue()));
+		}
 	}
 	
 	@Inject(method = "getActiveEyeHeight", at = @At("RETURN"), cancellable = true)
 	public void getActiveEyeHeight(CallbackInfoReturnable<Float> callbackInfo) {
-		double heightMultiplier = age > 0 ? getAttributeValue(SizeEntityAttributes.HEIGHT_MULTIPLIER) : 1;
-		callbackInfo.setReturnValue((float) (callbackInfo.getReturnValue() * heightMultiplier - 1 / 128f + (getPose() == EntityPose.SWIMMING && heightMultiplier < 1 ? heightMultiplier / 8 : 0)));
+		if (age > 0) {
+			EntityAttributeInstance heightMultiplier = getAttributeInstance(SizeEntityAttributes.HEIGHT_MULTIPLIER);
+			if (heightMultiplier != null) {
+				callbackInfo.setReturnValue((float) (callbackInfo.getReturnValue() * heightMultiplier.getValue() - 1 / 128f + (getPose() == EntityPose.SWIMMING && heightMultiplier.getValue() < 1 ? heightMultiplier.getValue() / 8 : 0)));
+			}
+		}
 	}
 }

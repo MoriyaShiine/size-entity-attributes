@@ -3,6 +3,7 @@ package moriyashiine.sizeentityattributes.mixin;
 import moriyashiine.sizeentityattributes.SizeEntityAttributes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -21,7 +22,10 @@ public abstract class ModifyHeightOffset extends LivingEntity {
 	
 	@Inject(method = "getHeightOffset", at = @At("RETURN"), cancellable = true)
 	private void getHeightOffset(CallbackInfoReturnable<Double> info) {
-		double heightMultiplier = getAttributeValue(SizeEntityAttributes.HEIGHT_MULTIPLIER);
-		info.setReturnValue(info.getReturnValue() * heightMultiplier + (heightMultiplier < 0.5 ? 0.175 : 0));
+		EntityAttributeInstance heightMultiplier = getAttributeInstance(SizeEntityAttributes.HEIGHT_MULTIPLIER);
+		if (heightMultiplier != null) {
+			double heightMultiplierValue = getAttributeValue(SizeEntityAttributes.HEIGHT_MULTIPLIER);
+			info.setReturnValue(info.getReturnValue() * heightMultiplierValue + (heightMultiplierValue < 0.5 ? 0.175 : 0));
+		}
 	}
 }
