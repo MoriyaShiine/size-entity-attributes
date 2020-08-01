@@ -6,6 +6,9 @@
   "mixins": [
 	"LivingEntityMixin",
 	"ModifyHeightOffset",
+	"ModifyHorseBaseOffset",
+	"ModifyLlamaOffset",
+	"ModifyMountedHeightOffset",
 	"PlayerEntityMixin"
   ],
   "client": [
