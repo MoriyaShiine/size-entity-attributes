@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin({ArmorStandEntity.class, AbstractSkeletonEntity.class, EndermiteEntity.class, PatrolEntity.class, PiglinEntity.class, SilverfishEntity.class, ZombieEntity.class, ZombifiedPiglinEntity.class, AnimalEntity.class, PlayerEntity.class})
+@Mixin({ArmorStandEntity.class, AbstractSkeletonEntity.class, EndermiteEntity.class, PatrolEntity.class, SilverfishEntity.class, ZombieEntity.class, ZombifiedPiglinEntity.class, AnimalEntity.class, PlayerEntity.class})
 public abstract class ModifyHeightOffset extends LivingEntity {
 	protected ModifyHeightOffset(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
